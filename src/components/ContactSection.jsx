@@ -10,9 +10,12 @@ export default function ContactSection() {
     name: "",
     phone: "",
     email: "",
+    company: "",
+    location: "",
     model: "",
     message: "",
   });
+
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -32,6 +35,8 @@ export default function ContactSection() {
       name: "",
       phone: "",
       email: "",
+      company: "",
+      location: "",
       model: "",
       message: "",
     });
@@ -40,13 +45,13 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="border-t border-white/10 bg-black px-5 py-20 text-white sm:px-6 md:px-8 md:py-28"
+      className="scroll-mt-32 border-t border-white/10 bg-black px-5 py-20 text-white sm:px-6 md:px-8 md:py-28"
     >
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start xl:gap-12">
+
           {/* LEFT COLUMN */}
           <div className="lg:pr-4">
-            {/* Intro */}
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +73,6 @@ export default function ContactSection() {
               </p>
             </motion.div>
 
-            {/* Business Info - desktop left, mobile below form */}
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -136,7 +140,6 @@ export default function ContactSection() {
 
           {/* RIGHT COLUMN */}
           <div className="mt-0">
-            {/* Form - mobile should appear before business info */}
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -146,6 +149,8 @@ export default function ContactSection() {
             >
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-5">
+
+                  {/* NAME + PHONE */}
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
                       <label className="mb-2 block text-sm text-white/60">
@@ -178,6 +183,7 @@ export default function ContactSection() {
                     </div>
                   </div>
 
+                  {/* EMAIL + MODEL */}
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
                       <label className="mb-2 block text-sm text-white/60">
@@ -221,6 +227,38 @@ export default function ContactSection() {
                     </div>
                   </div>
 
+                  {/* NEW FIELDS */}
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm text-white/60">
+                        Company Name
+                      </label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Enter your company name"
+                        className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-white/25 focus:border-[#0091EA]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="mb-2 block text-sm text-white/60">
+                        Location
+                      </label>
+                      <input
+                        type="text"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleChange}
+                        placeholder="City / Region"
+                        className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition placeholder:text-white/25 focus:border-[#0091EA]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* MESSAGE */}
                   <div>
                     <label className="mb-2 block text-sm text-white/60">
                       Message
@@ -267,7 +305,7 @@ export default function ContactSection() {
               )}
             </motion.div>
 
-            {/* Map */}
+            {/* MAP */}
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -283,14 +321,10 @@ export default function ContactSection() {
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
               />
             </motion.div>
           </div>
         </div>
-
-        {/* MOBILE ORDER FIX */}
-        <div className="mt-0 lg:hidden" />
       </div>
     </section>
   );

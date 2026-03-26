@@ -37,9 +37,9 @@ export default function WhyUsSection() {
 
   return (
     <section
-      id="why-us"
-      className="bg-white px-5 py-20 text-black sm:px-6 md:px-8 md:py-28"
-    >
+  id="why-us"
+  className="scroll-mt-32 bg-white px-5 py-20 text-black sm:px-6 md:px-8 md:py-28"
+>
       <div className="mx-auto max-w-7xl">
         {/* Intro */}
         <motion.div

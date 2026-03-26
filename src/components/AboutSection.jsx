@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 export default function AboutSection() {
   return (
     <section
-      id="about"
-      className="bg-white px-5 py-20 text-black sm:px-6 md:px-8 md:py-28"
-    >
+  id="about"
+  className="scroll-mt-32 bg-white px-5 py-20 text-black sm:px-6 md:px-8 md:py-28"
+>
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
         
         {/* LEFT CONTENT */}

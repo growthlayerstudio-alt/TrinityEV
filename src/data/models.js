@@ -22,13 +22,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("E4"),
         overview:
           "A low-speed electric scooter designed for practical city movement, dealer demand, and adaptable market positioning.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Urban-ready low-speed EV format",
           "Clean and approachable design language",
@@ -46,13 +66,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("FH"),
         overview:
           "A dealer-friendly electric scooter model intended for daily urban mobility with adaptable business positioning.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Business-ready city mobility option",
           "Modern scooter body styling",
@@ -70,13 +110,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("LIDE"),
         overview:
           "A streamlined EV scooter option suited for urban commuting demand and scalable B2B distribution.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Compact urban positioning",
           "Everyday ride practicality",
@@ -102,13 +162,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("DL"),
         overview:
           "A visually recognizable electric scooter designed to stand out through familiar styling and practical urban usability.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Distinctive double-light design identity",
           "Dealer showroom-friendly styling",
@@ -126,13 +206,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("SL"),
         overview:
           "A simple and familiar electric scooter silhouette built for practicality, clarity, and everyday market demand.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Clean and recognizable styling",
           "Suitable for broad consumer segments",
@@ -150,13 +250,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("VPSR"),
         overview:
           "A design-forward scooter model combining a classic visual language with low-speed city usability.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Classic round-light front identity",
           "High visual distinctiveness",
@@ -174,13 +294,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("VNS"),
         overview:
           "A style-conscious electric scooter model suited for dealers looking to offer familiar design with modern EV practicality.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Elegant visual profile",
           "Strong showroom presence",
@@ -206,13 +346,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("CSB-FB"),
         overview:
           "A functional electric scooter built for practical movement, dealer flexibility, and utility-focused market segments.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Utility-first positioning",
           "Suitable for everyday practical needs",
@@ -230,13 +390,33 @@ export const productSeries = [
         gallery: galleryFromPrefix("VPSS"),
         overview:
           "A utility-oriented electric scooter with a distinctive design language and practical low-speed EV application.",
-        specs: {
-          topSpeed: "Up to 50 km/h",
-          range: "Up to 120 km/charge",
-          battery: "Lithium",
-          chargingTime: "3–4 hours",
-          motorPower: "1000W–1500W",
-        },
+        specs: [
+  {
+    label: "Top Speed",
+    value: "Up to 50 km/h",
+    desc: "Speed can be customized as per business requirement (20–50 km/h variants available).",
+  },
+  {
+    label: "Range per Charge",
+    value: "Up to 120 km",
+    desc: "Range depends on battery type, load conditions, and usage patterns.",
+  },
+  {
+    label: "Battery Type",
+    value: "Lithium / Acid Lead",
+    desc: "Available in both Lithium-Ion and Acid Lead battery options based on requirement and pricing.",
+  },
+  {
+    label: "Charging Time",
+    value: "3–4 hours",
+    desc: "Charging duration may vary depending on battery type and charger specifications.",
+  },
+  {
+    label: "Motor Power",
+    value: "1000W – 1500W",
+    desc: "Motor configuration varies depending on model and intended usage.",
+  },
+],
         features: [
           "Bold front-light visual identity",
           "Practical utility positioning",

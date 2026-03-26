@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import AboutPage from "./pages/AboutPage";
 
+const NAVBAR_OFFSET = 120;
+
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
 
@@ -13,7 +15,13 @@ function ScrollToTop() {
 
       if (element) {
         requestAnimationFrame(() => {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
+          const y =
+            element.getBoundingClientRect().top + window.pageYOffset - NAVBAR_OFFSET;
+
+          window.scrollTo({
+            top: y,
+            behavior: "smooth",
+          });
         });
       }
 
