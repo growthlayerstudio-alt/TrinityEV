@@ -15,15 +15,7 @@ export default function ProductDetailPage() {
   const { slug } = useParams();
   const model = allModels.find((item) => item.slug === slug);
 
-  const seoTitle = `${model.name} Electric Scooter | Trinity EV`;
-
-const seoDescription =
-  model.overview ||
-  model.tagline ||
-  `${model.name} electric scooter from Trinity EV. Built for modern urban mobility, efficiency, and dealer-ready performance.`;
-
-const seoImage = gallery[0] || "/og-image.jpg";
-
+  
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [openSpecIndex, setOpenSpecIndex] = useState(0);
@@ -138,6 +130,15 @@ const seoImage = gallery[0] || "/og-image.jpg";
 
   const seriesName = model.series || "Trinity EV Model";
 
+  const seoTitle = `${model.name} Electric Scooter | Trinity EV`;
+
+const seoDescription =
+  model.overview ||
+  model.tagline ||
+  `${model.name} electric scooter from Trinity EV. Built for modern urban mobility, efficiency, and dealer-ready performance.`;
+
+const seoImage = gallery[0] || "/og-image.jpg";
+
   const openLightbox = (index) => {
     setActiveImageIndex(index);
     setLightboxOpen(true);
@@ -168,6 +169,13 @@ const seoImage = gallery[0] || "/og-image.jpg";
       <Navbar />
 
       <main className="bg-white text-black">
+  <SEO
+    title={seoTitle}
+    description={seoDescription}
+    path={`/products/${model.slug}`}
+    image={`https://yourdomain.com${seoImage}`}
+  />
+        
         {/* Hero */}
         <section className="px-5 pb-16 pt-32 sm:px-6 md:px-8 md:pb-20 md:pt-36">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
