@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FiPhone, FiMessageCircle } from "react-icons/fi";
+import { FiPhone, FiMessageCircle, FiChevronDown } from "react-icons/fi";
 import { allModels } from "../data/models";
 
 const phoneNumbers = ["9728110070", "8510801010", "9896000493"];
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbxqx9B_joW9SzrGfvlzqu9BouBZbRfgEwDh0yTurR-SxZ7EmGvbbEhqx4TIVCNffFzs/exec";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -12,34 +14,91 @@ export default function ContactSection() {
     email: "",
     company: "",
     location: "",
-    model: "",
+    models: [],
     message: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showModelDropdown, setShowModelDropdown] = useState(false);
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowModelDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const toggleModel = (modelName) => {
+    setFormData((prev) => {
+      const alreadySelected = prev.models.includes(modelName);
 
-    console.log("Submitted data:", formData);
-
-    setSubmitted(true);
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      company: "",
-      location: "",
-      model: "",
-      message: "",
+      return {
+        ...prev,
+        models: alreadySelected
+          ? prev.models.filter((item) => item !== modelName)
+          : [...prev.models, modelName],
+      };
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    if (formData.models.length === 0) {
+      setErrorMessage("Please select at least one model of interest.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify({
+          ...formData,
+          models: formData.models,
+        }),
+      });
+
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        company: "",
+        location: "",
+        models: [],
+        message: "",
+      });
+      setShowModelDropdown(false);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setErrorMessage("Something went wrong while submitting. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -49,15 +108,12 @@ export default function ContactSection() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start xl:gap-12">
-
-          {/* LEFT COLUMN */}
           <div className="lg:pr-4">
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7 }}
-              className="order-1"
             >
               <p className="mb-5 text-xs font-medium uppercase tracking-[0.32em] text-[#0091EA] sm:text-sm">
                 Contact Us
@@ -78,7 +134,7 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: 0.08 }}
-              className="order-3 mt-10 rounded-[28px] border border-white/10 bg-white/[0.03] p-6 sm:p-7 lg:mt-10"
+              className="mt-10 rounded-[28px] border border-white/10 bg-white/[0.03] p-6 sm:p-7 lg:mt-10"
             >
               <p className="text-xs font-medium uppercase tracking-[0.28em] text-[#0091EA]">
                 Business Information
@@ -109,7 +165,7 @@ export default function ContactSection() {
 
                 <div>
                   <p className="text-sm text-white/42">Address</p>
-                  <p className="mt-2 max-w-lg text-white/82 leading-7">
+                  <p className="mt-2 max-w-lg leading-7 text-white/82">
                     844 WE WORK DLF FORUM CYBER CITY PHASE 3 GURUGRAM, HARYANA
                     122002
                   </p>
@@ -119,7 +175,7 @@ export default function ContactSection() {
               <div className="mt-7 flex flex-wrap gap-3">
                 <a
                   href="tel:9728110070"
-                  className="inline-flex w-auto items-center justify-center gap-2 rounded-full bg-[#0091EA] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#0079c7]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0091EA] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#0079c7]"
                 >
                   <FiPhone size={16} />
                   Call Now
@@ -129,7 +185,7 @@ export default function ContactSection() {
                   href="https://wa.me/919728110070"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex w-auto items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#1ebe5b]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#1ebe5b]"
                 >
                   <FiMessageCircle size={16} />
                   WhatsApp
@@ -138,19 +194,16 @@ export default function ContactSection() {
             </motion.div>
           </div>
 
-          {/* RIGHT COLUMN */}
-          <div className="mt-0">
+          <div>
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: 0.06 }}
-              className="order-2 rounded-[32px] border border-white/10 bg-white/[0.03] p-6 sm:p-7 md:p-8"
+              className="rounded-[32px] border border-white/10 bg-white/[0.03] p-6 sm:p-7 md:p-8"
             >
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-5">
-
-                  {/* NAME + PHONE */}
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
                       <label className="mb-2 block text-sm text-white/60">
@@ -183,7 +236,6 @@ export default function ContactSection() {
                     </div>
                   </div>
 
-                  {/* EMAIL + MODEL */}
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
                       <label className="mb-2 block text-sm text-white/60">
@@ -200,34 +252,53 @@ export default function ContactSection() {
                       />
                     </div>
 
-                    <div>
+                    <div ref={dropdownRef}>
                       <label className="mb-2 block text-sm text-white/60">
-                        Model of Interest
+                        Models of Interest
                       </label>
-                      <select
-                        name="model"
-                        value={formData.model}
-                        onChange={handleChange}
-                        required
-                        className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none transition focus:border-[#0091EA]"
+
+                      <button
+                        type="button"
+                        onClick={() => setShowModelDropdown((prev) => !prev)}
+                        className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-left text-white transition hover:border-[#0091EA]"
                       >
-                        <option value="" className="bg-black text-white">
-                          Select a model
-                        </option>
-                        {allModels.map((model) => (
-                          <option
-                            key={model.slug}
-                            value={model.name}
-                            className="bg-black text-white"
-                          >
-                            {model.name}
-                          </option>
-                        ))}
-                      </select>
+                        <span className={formData.models.length ? "text-white" : "text-white/35"}>
+                          {formData.models.length
+                            ? formData.models.join(", ")
+                            : "Select model(s)"}
+                        </span>
+                        <FiChevronDown className="shrink-0" />
+                      </button>
+
+                      {showModelDropdown && (
+                        <div className="mt-3 max-h-56 overflow-y-auto rounded-2xl border border-white/10 bg-[#0b0b0b] p-3">
+                          <div className="space-y-2">
+                            {allModels.map((model) => (
+                              <label
+                                key={model.slug}
+                                className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-white/5"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={formData.models.includes(model.name)}
+                                  onChange={() => toggleModel(model.name)}
+                                  className="h-4 w-4 accent-[#0091EA]"
+                                />
+                                <span className="text-sm text-white/85">
+                                  {model.name}
+                                </span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <p className="mt-2 text-xs text-white/45">
+                        Tick multiple models from the list.
+                      </p>
                     </div>
                   </div>
 
-                  {/* NEW FIELDS */}
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
                       <label className="mb-2 block text-sm text-white/60">
@@ -258,7 +329,6 @@ export default function ContactSection() {
                     </div>
                   </div>
 
-                  {/* MESSAGE */}
                   <div>
                     <label className="mb-2 block text-sm text-white/60">
                       Message
@@ -273,11 +343,16 @@ export default function ContactSection() {
                     />
                   </div>
 
+                  {errorMessage && (
+                    <p className="text-sm text-red-400">{errorMessage}</p>
+                  )}
+
                   <button
                     type="submit"
-                    className="inline-flex w-auto items-center justify-center rounded-full bg-[#0091EA] px-7 py-3 text-sm font-medium text-white transition hover:bg-[#0079c7]"
+                    disabled={isSubmitting}
+                    className="inline-flex items-center justify-center rounded-full bg-[#0091EA] px-7 py-3 text-sm font-medium text-white transition hover:bg-[#0079c7] disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Submit Enquiry
+                    {isSubmitting ? "Submitting..." : "Submit Enquiry"}
                   </button>
                 </form>
               ) : (
@@ -296,8 +371,9 @@ export default function ContactSection() {
                   </p>
 
                   <button
+                    type="button"
                     onClick={() => setSubmitted(false)}
-                    className="mt-8 inline-flex w-auto items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-3 text-sm font-medium text-white transition hover:border-white/30 hover:bg-white/10"
+                    className="mt-8 inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-3 text-sm font-medium text-white transition hover:border-white/30 hover:bg-white/10"
                   >
                     Submit Another Response
                   </button>
@@ -305,13 +381,12 @@ export default function ContactSection() {
               )}
             </motion.div>
 
-            {/* MAP */}
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="order-4 mt-5 overflow-hidden rounded-[28px] border border-white/10"
+              className="mt-5 overflow-hidden rounded-[28px] border border-white/10"
             >
               <iframe
                 title="Trinity EV Location"
