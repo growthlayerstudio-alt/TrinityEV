@@ -15,71 +15,13 @@ export default function ProductDetailPage() {
   const { slug } = useParams();
   const model = allModels.find((item) => item.slug === slug);
 
-  
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [openSpecIndex, setOpenSpecIndex] = useState(0);
   const [heroImageIndex, setHeroImageIndex] = useState(0);
 
-  useEffect(() => {
-    if (!lightboxOpen) return;
-
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") showPrevImage();
-      if (e.key === "ArrowRight") showNextImage();
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [lightboxOpen, activeImageIndex]);
-
-  if (!model) {
-    return (
-      <>
-  <Navbar />
-
-  <main className="bg-white text-black">
-    <SEO
-      title={seoTitle}
-      description={seoDescription}
-      path={`/products/${model.slug}`}
-      image={`https://yourdomain.com${seoImage}`}
-    />
-          <div className="mx-auto max-w-5xl">
-            <p className="text-xs font-medium uppercase tracking-[0.32em] text-[#0091EA] sm:text-sm">
-              Product Not Found
-            </p>
-
-            <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
-              This model page is not available.
-            </h1>
-
-            <p className="mt-5 max-w-2xl text-sm leading-7 text-black/60 sm:text-base">
-              The model you are trying to view does not exist in the current
-              product data.
-            </p>
-
-            <Link
-              to="/"
-              className="mt-8 inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-black/85"
-            >
-              Back to Homepage
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </>
-    );
-  }
-
   const features =
-    Array.isArray(model.features) && model.features.length > 0
+    model && Array.isArray(model.features) && model.features.length > 0
       ? model.features
       : [
           "Practical urban mobility positioning",
@@ -89,12 +31,14 @@ export default function ProductDetailPage() {
         ];
 
   const gallery =
-    Array.isArray(model.gallery) && model.gallery.length > 0
+    model && Array.isArray(model.gallery) && model.gallery.length > 0
       ? model.gallery
-      : [model.heroImage || model.image, model.image].filter(Boolean);
+      : model
+      ? [model.heroImage || model.image, model.image].filter(Boolean)
+      : [];
 
   const specs =
-    Array.isArray(model.specs) && model.specs.length > 0
+    model && Array.isArray(model.specs) && model.specs.length > 0
       ? model.specs
       : [
           {
@@ -125,19 +69,21 @@ export default function ProductDetailPage() {
         ];
 
   const overview =
-    model.overview ||
+    model?.overview ||
     "This model is positioned for practical electric mobility requirements with a dealer-friendly approach and clean commercial appeal.";
 
-  const seriesName = model.series || "Trinity EV Model";
+  const seriesName = model?.series || "Trinity EV Model";
 
-  const seoTitle = `${model.name} Electric Scooter | Trinity EV`;
+  const seoTitle = model
+    ? `${model.name} Electric Scooter | Trinity EV`
+    : "Product Not Found | Trinity EV";
 
-const seoDescription =
-  model.overview ||
-  model.tagline ||
-  `${model.name} electric scooter from Trinity EV. Built for modern urban mobility, efficiency, and dealer-ready performance.`;
+  const seoDescription =
+    model?.overview ||
+    model?.tagline ||
+    "Trinity EV electric scooters built for modern urban mobility, efficiency, and dealer-ready performance.";
 
-const seoImage = gallery[0] || "/og-image.jpg";
+  const seoImage = gallery[0] || "/og-image.jpg";
 
   const openLightbox = (index) => {
     setActiveImageIndex(index);
@@ -164,18 +110,77 @@ const seoImage = gallery[0] || "/og-image.jpg";
     setHeroImageIndex((prev) => (prev + 1) % gallery.length);
   };
 
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showPrevImage();
+      if (e.key === "ArrowRight") showNextImage();
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxOpen, activeImageIndex]);
+
+  if (!model) {
+    return (
+      <>
+        <Navbar />
+
+        <main className="bg-white px-5 py-32 text-black sm:px-6 md:px-8">
+          <SEO
+            title="Product Not Found | Trinity EV"
+            description="The requested Trinity EV model page is not available."
+            path="/products"
+            image="https://trinityev.in/og-image.jpg"
+          />
+
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs font-medium uppercase tracking-[0.32em] text-[#0091EA] sm:text-sm">
+              Product Not Found
+            </p>
+
+            <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+              This model page is not available.
+            </h1>
+
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-black/60 sm:text-base">
+              The model you are trying to view does not exist in the current
+              product data.
+            </p>
+
+            <Link
+              to="/"
+              className="mt-8 inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-black/85"
+            >
+              Back to Homepage
+            </Link>
+          </div>
+        </main>
+
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar />
 
       <main className="bg-white text-black">
-  <SEO
-    title={seoTitle}
-    description={seoDescription}
-    path={`/products/${model.slug}`}
-    image={`https://yourdomain.com${seoImage}`}
-  />
-        
+        <SEO
+          title={seoTitle}
+          description={seoDescription}
+          path={`/products/${model.slug}`}
+          image={`https://trinityev.in${seoImage}`}
+        />
+
         {/* Hero */}
         <section className="px-5 pb-16 pt-32 sm:px-6 md:px-8 md:pb-20 md:pt-36">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -217,7 +222,9 @@ const seoImage = gallery[0] || "/og-image.jpg";
                   >
                     <img
                       src={gallery[heroImageIndex]}
-                      alt={`${model.name} electric scooter image ${heroImageIndex + 1}`}
+                      alt={`${model.name} electric scooter image ${
+                        heroImageIndex + 1
+                      }`}
                       className="h-full w-full object-cover transition duration-500 hover:scale-[1.01]"
                     />
                   </button>
@@ -291,11 +298,14 @@ const seoImage = gallery[0] || "/og-image.jpg";
               <div className="mt-8 grid gap-4">
                 {specs.map((spec, index) => {
                   const isOpen = openSpecIndex === index;
+                  const hasComplianceNote =
+                    spec.label?.toLowerCase().includes("top speed") ||
+                    spec.label?.toLowerCase().includes("motor power");
 
                   return (
                     <div
                       key={`${spec.label}-${index}`}
-                      className="overflow-hidden rounded-[24px] border border-black/10 bg-[#fafafa]"
+                      className="overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-[0_12px_35px_rgba(0,0,0,0.04)]"
                     >
                       <button
                         type="button"
@@ -303,16 +313,23 @@ const seoImage = gallery[0] || "/og-image.jpg";
                         className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left"
                       >
                         <div>
-                          <p className="text-[11px] uppercase tracking-[0.18em] text-black/42 sm:text-xs">
+                          <p className="text-[11px] uppercase tracking-[0.18em] text-[#0091EA] sm:text-xs">
                             {spec.label}
+                            {hasComplianceNote && (
+                              <span className="ml-1 text-[#0091EA]">*</span>
+                            )}
                           </p>
-                          <p className="mt-2 text-lg font-medium text-black sm:text-xl">
+
+                          <p className="mt-2 text-lg font-semibold text-black sm:text-xl">
                             {spec.value}
+                            {hasComplianceNote && (
+                              <span className="ml-1 text-[#0091EA]">*</span>
+                            )}
                           </p>
                         </div>
 
                         <FiChevronDown
-                          className={`shrink-0 text-xl text-black/60 transition-transform duration-300 ${
+                          className={`shrink-0 text-xl text-black/45 transition-transform duration-300 ${
                             isOpen ? "rotate-180" : ""
                           }`}
                         />
@@ -324,7 +341,7 @@ const seoImage = gallery[0] || "/og-image.jpg";
                         }`}
                       >
                         <div className="overflow-hidden">
-                          <div className="border-t border-black/10 px-5 py-4">
+                          <div className="border-t border-black/10 bg-[#f8fbff] px-5 py-4">
                             <p className="text-sm leading-7 text-black/65">
                               {spec.desc}
                             </p>
@@ -334,6 +351,20 @@ const seoImage = gallery[0] || "/og-image.jpg";
                     </div>
                   );
                 })}
+              </div>
+
+              <div className="mt-5 rounded-[22px] border border-[#0091EA]/20 bg-[#f8fbff] px-5 py-4">
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#0091EA]">
+                  Specification Note
+                </p>
+
+                <p className="mt-2 text-sm leading-7 text-black/62">
+                  *Top speed and motor power may vary according to
+                  country-specific regulations and approved market
+                  configurations. India-specific models are offered in a
+                  compliant low-speed configuration aligned with applicable
+                  market norms.
+                </p>
               </div>
             </div>
           </div>
@@ -347,6 +378,7 @@ const seoImage = gallery[0] || "/og-image.jpg";
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#0091EA]">
                   Gallery
                 </p>
+
                 <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
                   Explore {model.name} from every angle
                 </h2>
@@ -364,7 +396,9 @@ const seoImage = gallery[0] || "/og-image.jpg";
                   {image ? (
                     <img
                       src={image}
-                      alt={`${model.name} electric scooter gallery image ${index + 1}`}
+                      alt={`${model.name} electric scooter gallery image ${
+                        index + 1
+                      }`}
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                     />
                   ) : (
@@ -395,8 +429,9 @@ const seoImage = gallery[0] || "/og-image.jpg";
                 </h2>
 
                 <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-white/75 sm:text-base md:text-lg">
-                  Reach out for dealership discussions, distribution partnerships,
-                  product enquiries, or bulk business requirements.
+                  Reach out for dealership discussions, distribution
+                  partnerships, product enquiries, or bulk business
+                  requirements.
                 </p>
 
                 <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -456,7 +491,9 @@ const seoImage = gallery[0] || "/og-image.jpg";
             <div className="flex h-full max-h-[78vh] w-full max-w-6xl items-center justify-center overflow-hidden rounded-[24px]">
               <img
                 src={gallery[activeImageIndex]}
-                alt={`${model.name} electric scooter enlarged image ${activeImageIndex + 1}`}
+                alt={`${model.name} electric scooter enlarged image ${
+                  activeImageIndex + 1
+                }`}
                 className="max-h-full max-w-full object-contain"
               />
             </div>
